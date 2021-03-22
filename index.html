@@ -1,127 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<header>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Welcome</title>
     <link rel="stylesheet" href="style.css" />
-</head>
+    <link rel="icon" href="favicon.ico" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+</header>
 
 <body>
     <div id="search">
-      <input
-        id="search-field"
-        type="text"
-        name="search-field"
-        onkeypress="return search(event)" # Search on enter key event
-      />
+        <button class="heart"> 
+      <i class="far fa-heart"></i> 
+      </button>
+
+        <input id="search-field" 
+        placeholder="type here to search" 
+        type="text" name="search-field" 
+        onkeypress="return search(event)" # Search on enter key event />
+
+        <button class="heart"> 
+    <i class="far fa-heart"></i> 
+    </button>
     </div>
+
     <div class="container">
-      <div id="clock"></div>
-      <div class="weather-container">
-        <div class="row">
-          <div id="weather-description" class="inline"></div>
-          <div class="inline">-</div>
-          <div id="temp" class="inline"></div>
+        <div id="clock"></div>
+        <div class="weather-container">
+            <div class="row">
+                <div id="weather-description" class="inline"></div>
+                <div class="inline">-</div>
+                <div id="temp" class="inline"></div>
+            </div>
         </div>
-      </div>
-      <div id="bookmark-container"></div>
+        <div id="bookmark-container"></div>
     </div>
 
     <script src="bookmarks.js"></script>
     <script>
-      const searchUrl = "https://google.com/search?q=";
-      function search(e) {
-        if (e.keyCode == 13) { 
-          // space bar
-          var val = document.getElementById("search-field").value;
-          window.open(searchUrl + val);
-        }
-      }
-      // Get current time and format
-      function getTime() {
-        let date = new Date(),
-          min = date.getMinutes(),
-          sec = date.getSeconds(),
-          hour = date.getHours();
+        const searchUrl = "https://google.com/search?q=";
 
-        return (
-          "" +
-          (hour < 10 ? "0" + hour : hour) +
-          ":" +
-          (min < 10 ? "0" + min : min) +
-          ":" +
-          (sec < 10 ? "0" + sec : sec)
-        );
-      }
-      // Handle Weather request
-      function getWeather() {
-        let xhr = new XMLHttpRequest();
-        // Request to open weather map
-        xhr.open(
-          "GET",
-          "https://api.openweathermap.org/data/2.5/weather?lat=49.376636&lon=3.32342&units=metric&appid=9a26ad58454ca68fe35c9c1da66ced8e"
-        );
-        xhr.onload = () => {
-          if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-              let json = JSON.parse(xhr.responseText);
-              document.getElementById("temp").innerHTML =
-                json.main.temp.toFixed(0) + "°C";
-              document.getElementById("weather-description").innerHTML =
-                json.weather[0].description;
-            } else {
-              console.log("error msg: " + xhr.status);
+        function search(e) {
+            if (e.keyCode == 13) {
+                // space bar
+                var val = document.getElementById("search-field").value;
+                window.open(searchUrl + val);
             }
-          }
-        };
-        xhr.send();
-      }
-      // Handle writing out Bookmarks
-      function setupBookmarks() {
-        const bookmarkContainer = document.getElementById("bookmark-container");
-        bookmarkContainer.innerHTML = bookmarks
-          .map((b) => {
-            const html = ["<div class='bookmark-set'>"];
-            html.push(`<div class="bookmark-title">${b.title}</div>`);
-            html.push('<div class="bookmark-inner-container">');
-            html.push(
-              ...b.links.map(
-                (l) =>
-                  `<a class="bookmark" href="${l.url}" target="_blank">${l.name}</a>`
-              )
-            );
-            html.push("</div></div>");
-            return html.join("");
-          })
-          .join("");
-      }
-
-      window.onload = () => {
-        setupBookmarks();
-        getWeather();
-        // Set up the clock
-        document.getElementById("clock").innerHTML = getTime();
-        // Set clock interval to tick clock
-        setInterval(() => {
-          document.getElementById("clock").innerHTML = getTime();
-        }, 100);
-      };
-
-      document.addEventListener("keyup", (event) => {
-        if (event.keyCode == 32) {
-          // Spacebar code to open search
-          document.getElementById("search").style.display = "flex";
-          document.getElementById("search-field").focus();
-        } else if (event.keyCode == 27) {
-          // Esc to close search
-          document.getElementById("search-field").value = "";
-          document.getElementById("search-field").blur();
-          document.getElementById("search").style.display = "none";
         }
-      });
+        // Get current time and format
+        function getTime() {
+            let date = new Date(),
+                min = date.getMinutes(),
+                sec = date.getSeconds(),
+                hour = date.getHours();
+
+            return (
+                "" +
+                (hour < 10 ? "0" + hour : hour) +
+                ":" +
+                (min < 10 ? "0" + min : min) +
+                ":" +
+                (sec < 10 ? "0" + sec : sec)
+            );
+        }
+        // Handle Weather request
+        function getWeather() {
+            let xhr = new XMLHttpRequest();
+            // Request to open weather map
+            xhr.open(
+                "GET",
+                "https://api.openweathermap.org/data/2.5/weather?lat=49.376636&lon=3.32342&units=metric&appid=9a26ad58454ca68fe35c9c1da66ced8e"
+            );
+            xhr.onload = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        let json = JSON.parse(xhr.responseText);
+                        document.getElementById("temp").innerHTML =
+                            json.main.temp.toFixed(0) + "°C";
+                        document.getElementById("weather-description").innerHTML =
+                            "Soissons: " + json.weather[0].description;
+                    } else {
+                        console.log("error msg: " + xhr.status);
+                    }
+                }
+            };
+            xhr.send();          
+        }
+        // Handle writing out Bookmarks
+        function setupBookmarks() {
+            const bookmarkContainer = document.getElementById("bookmark-container");
+            bookmarkContainer.innerHTML = bookmarks
+                .map((b) => {
+                    const html = ["<div class='bookmark-set'>"];
+                    html.push(`<div class="bookmark-title">${b.title}</div>`);
+                    html.push('<div class="bookmark-inner-container">');
+                    html.push(
+                        ...b.links.map(
+                            (l) =>
+                            `<a class="bookmark" href="${l.url}" target="_blank"><i class="${l.fa}"></i> ${l.name}</a>`
+                        )
+                    );
+                    html.push("</div></div>");
+                    return html.join("");
+                })
+                .join("");
+        }
+
+        window.onload = () => {
+            setupBookmarks();
+            getWeather();
+            // Set up the clock
+            document.getElementById("clock").innerHTML = getTime();
+            // Set clock interval to tick clock
+            setInterval(() => {
+                document.getElementById("clock").innerHTML = getTime();
+            }, 100);
+        };
+
+
+        document.addEventListener("keyup", (event) => {
+            if (event.keyCode == 32) {
+                // Spacebar code to open search
+                document.getElementById("search").style.display = "flex";
+                document.getElementById("search-field").focus();
+            } else if (event.keyCode == 27) {
+                // Esc to close search
+                document.getElementById("search-field").value = "";
+                document.getElementById("search-field").blur();
+                document.getElementById("search").style.display = "none";
+            }
+        });
+
+        // our flags
+        var gay = "linear-gradient(to right, rgb(255, 221, 234) , rgb(242, 255, 219) , #DEEDFF , #F7C9FF)";
+        var trans = "linear-gradient(to right, rgb(176, 226, 255), rgb(248, 195, 255), rgb(255, 249, 254), rgb(248, 195, 255), rgb(176, 226, 255)";
+        // pick random
+        const randomArray = [gay, trans]
+            // random
+        const random = Math.floor(Math.random() * randomArray.length);
+
+        document.getElementById('search').style.backgroundImage = (random, randomArray[random])
+        document.querySelector(":root").style.backgroundImage = (random, randomArray[random])
+
     </script>
-  </body>
+</body>
+
 </html>
