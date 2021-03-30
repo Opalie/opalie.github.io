@@ -72,6 +72,16 @@ button.heart{
   color: var(--fg);
   text-align: center;
 }
+
+#weather-icon {
+  font-size: 200px;
+  color: #ffffffb6;
+  position: absolute;
+  z-index: -1;
+  right: 400px;
+  top: 50px
+}
+
 .inline {
   display: inline-block;
 }

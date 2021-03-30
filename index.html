@@ -28,6 +28,7 @@
     </div>
 
     <div class="container">
+        <div id="weather-icon" class="inline"></div>
         <div id="clock"></div>
         <div class="weather-container">
             <div class="row">
@@ -82,6 +83,56 @@
                             json.main.temp.toFixed(0) + "°C";
                         document.getElementById("weather-description").innerHTML =
                             "Soissons: " + json.weather[0].description;
+                        // ICONS
+                        document.getElementById("weather-icon").innerHTML =
+                            json.weather[0].icon;
+                            // switch
+                        switch (json.weather[0].icon){
+                            case "01d": // clear sky SUN
+                                document.getElementById("weather-icon").innerHTML = 
+                                "<i class='fas fa-sun'></i>";
+                                break;
+                            case "01n": // clear sky MOON
+                                document.getElementById("weather-icon").innerHTML = 
+                                "<i class='fas fa-moon'></i>";
+                                break;
+                            case "02d": // few clouds SUN
+                                document.getElementById("weather-icon").innerHTML = 
+                                "<i class='fas fa-cloud-sun'></i>";
+                                break;
+                            case "02n": // few clouds MOON
+                                document.getElementById("weather-icon").innerHTML = 
+                                "<i class='fas fa-cloud-moon'></i>";
+                                break;
+                            case "03d": // scattered clouds
+                                document.getElementById("weather-icon").innerHTML = 
+                                "<i class='fas fa-cloud'></i>";
+                                break;
+                            case "04d" || "04n": // broken clouds
+                                document.getElementById("weather-icon").innerHTML = 
+                                "<i class='fas fa-cloud'></i>";
+                                break;
+                            case "09d" || "10d": // rain
+                                document.getElementById("weather-icon").innerHTML = 
+                                "<i class='fas fa-cloud-showers-heavy'></i>";
+                                break;
+                            case "09n" || "10n": // rain MOON
+                                document.getElementById("weather-icon").innerHTML = 
+                                "<i class='fas fa-cloud-moon-rain'></i>";
+                                break;
+                            case "11d" || "11n": // thunderstorm
+                                document.getElementById("weather-icon").innerHTML = 
+                                "<i class='fas fa-bolt'></i>";
+                                break;
+                            case "13d" || "13n": // snow
+                                document.getElementById("weather-icon").innerHTML = 
+                                "<i class='far fa-snowflake'></i>";
+                                break;
+                            case "50d" || "50n": // mist
+                                document.getElementById("weather-icon").innerHTML = 
+                                "<i class='fas fa-smog'></i>";
+                                break;
+                        }
                     } else {
                         console.log("error msg: " + xhr.status);
                     }
@@ -136,9 +187,9 @@
 
         // our flags
         var gay = "linear-gradient(to right, rgb(255, 221, 234) , rgb(242, 255, 219) , #DEEDFF , #F7C9FF)";
-        var trans = "linear-gradient(to right, rgb(176, 226, 255), rgb(248, 195, 255), rgb(255, 249, 254), rgb(248, 195, 255), rgb(176, 226, 255)";
+        var teal = "linear-gradient(to right, rgb(204, 255, 245), rgb(230, 230, 255), rgb(242, 204, 255)";
         // pick random
-        const randomArray = [gay, trans]
+        const randomArray = [gay, teal]
             // random
         const random = Math.floor(Math.random() * randomArray.length);
 
