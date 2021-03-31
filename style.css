@@ -5,7 +5,6 @@
   --fg: #069aa8;
   --secondaryFg: #ffc7c9;
   --containerBg: #ffffff;
-  --searchBg: var(--containerBg);
   --scrollbarColor: #ffc7c94f;
   --fontFamily: 'Roboto Mono', monospace;
   --titleFont: 'VT323', monospace;
